@@ -72,3 +72,42 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
+
+# Docker aliases
+alias docker-clear="docker rm $(docker ps -a -q)"
+
+alias dbs="~/.zprezto/scripts/start_dbs.sh && ~/.zprezto/scripts/update_db_hosts.sh"
+
+
+# Kubernetes aliases
+
+alias krr="export KUBECONFIG=~/workspace/java/roadrunner/config/james_bond/kubernetes/production/kubeconfig"
+alias kmin="export KUBECONFIG=~/.kube/config"
+
+alias k="kubectl"
+
+podByIndex(){
+  k get pods -o "jsonpath={.items[$1].metadata.name}"
+}
+
+sshByIndex(){
+  k exec -it $(k get pods -o jsonpath={.items[$1].metadata.name}) /bin/bash
+}
+
+sshPod(){
+  if [ -z "$2" ]
+    then
+      echo "Opening bash on default container of '$1' pod"
+      k exec -it $1 /bin/bash
+  else
+    echo "Opening bash on container '$2' ('$1' pod)"
+    k exec -it $1 -c $2 /bin/bash
+  fi
+}
+
+
+alias ki=podByIndex
+alias kssh=sshPod
+
+alias rr-instances="aws ec2 describe-instances --filter Name=tag:Project,Values=roadrunner --query='Reservations[].Instances[].[PublicIpAddress]' --output=table"
+
