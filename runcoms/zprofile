@@ -17,8 +17,8 @@ fi
 # Editors
 #
 
-export EDITOR='nano'
-export VISUAL='nano'
+export EDITOR='vim'
+export VISUAL='vim'
 export PAGER='less'
 
 #
@@ -81,7 +81,7 @@ alias dbs="~/.zprezto/scripts/start_dbs.sh && ~/.zprezto/scripts/update_db_hosts
 
 # Kubernetes aliases
 
-alias krr="export KUBECONFIG=~/workspace/java/roadrunner/config/james_bond/kubernetes/production/kubeconfig"
+alias krr="export KUBECONFIG=~/workspace/java/roadrunner/kubernetes/production/kubeconfig"
 alias kmin="export KUBECONFIG=~/.kube/config"
 
 alias k="kubectl"
@@ -109,5 +109,13 @@ sshPod(){
 alias ki=podByIndex
 alias kssh=sshPod
 
-alias rr-instances="aws ec2 describe-instances --filter Name=tag:Project,Values=roadrunner --query='Reservations[].Instances[].[PublicIpAddress]' --output=table"
+alias ssh-spark-streaming="ssh -i ~/.ssh/mapreduce-cluster.pem -ND 8157 hadoop@10.0.2.230"
+alias start-redis-test="~/.zprezto/scripts/start_redis_test.sh"
 
+alias pyshell='/usr/local/bin/python3.7 "/Applications/PyCharm CE.app/Contents/helpers/pydev/pydevconsole.py" --mode=client --port=64370'
+
+#eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
+
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH=$HOME/bin:$PATH
